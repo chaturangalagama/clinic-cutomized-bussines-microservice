@@ -1,0 +1,48 @@
+package com.ilt.cms.pm.business.service.patient.patientVisit;
+
+import com.ilt.cms.core.entity.diagnosis.Diagnosis;
+import com.ilt.cms.database.patient.patientVisit.DiagnosisDatabaseService;
+import com.lippo.cms.exception.CMSException;
+import com.lippo.commons.util.StatusCode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class DiagnosisService {
+    private static final Logger logger = LoggerFactory.getLogger(DiagnosisService.class);
+    private DiagnosisDatabaseService diagnosisDatabaseService;
+
+    public DiagnosisService(DiagnosisDatabaseService diagnosisDatabaseService) {
+        this.diagnosisDatabaseService = diagnosisDatabaseService;
+    }
+
+    public List<Diagnosis> search(String term) {
+        logger.info("Searching the system for the term [" + term + "]");
+        List<Diagnosis> diagnosisList = diagnosisDatabaseService.search(term);
+        logger.info("found [" + diagnosisList.size() + "]");
+        return diagnosisList;
+    }
+
+    public List<Diagnosis> searchById(List<String> diagnosisIds) {
+        logger.info("Searching the system for diagnosisIds [" + diagnosisIds + "]");
+        Iterable<Diagnosis> diagnoses = diagnosisDatabaseService.findAll(diagnosisIds);
+        List<Diagnosis> target = new ArrayList<>();
+        diagnoses.forEach(target::add);
+        logger.info("found [" + target.size() + "]");
+        return target;
+    }
+
+    public boolean checkDiagnosisIdsValidity(List<String> ids) throws CMSException {
+        for(String id:ids){
+            if(!diagnosisDatabaseService.exists(id)){
+                logger.debug("Invalid diagnosis ID found");
+                throw new CMSException(StatusCode.E1002,"Invalid diagnosis id present");
+            }
+        }
+        return true;
+    }
+}
