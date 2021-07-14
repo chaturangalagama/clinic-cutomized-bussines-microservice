@@ -1,5 +1,6 @@
 package com.ilt.cms.downstream.clinic.billing;
 
+import com.ilt.cms.core.entity.billing.ItemChargeDetail;
 import com.ilt.cms.core.entity.sales.PaymentInfo;
 import com.lippo.commons.web.api.ApiResponse;
 import org.springframework.http.ResponseEntity;
@@ -23,4 +24,9 @@ public interface ChargingApiService {
     ResponseEntity<ApiResponse> deleteInvoice(String caseId, String invoiceIdList, String reason);
 
     ResponseEntity<ApiResponse> getPaymentModes();
+
+    ResponseEntity<ApiResponse> findInvoiceBreakdownForCase(String caseId);
+
+//    ResponseEntity<ApiResponse> findInvoiceBreakdownForCase(String caseId, ItemChargeDetail.ItemChargeRequest itemChargeRequest);
+
 }

@@ -416,13 +416,13 @@ public class PatientVisitService {
             throw new CMSException(StatusCode.E1010, "Updates are only allowed till [" + EDITABLE_HOURS + "] hours after visit complete");
         }
 
-        if (diagnosisIds == null || diagnosisIds.size() == 0) {
-            logger.error("Minimum of one diagnosis should be set");
-            throw new CMSException(StatusCode.E1010, "Minimum of one diagnosis should be set");
-        }
-        if (diagnosisService.checkDiagnosisIdsValidity(diagnosisIds)) {
-            currentVisit.getMedicalReference().setDiagnosisIds(diagnosisIds);
-        }
+//        if (diagnosisIds == null || diagnosisIds.size() == 0) { ---commented---
+//            logger.error("Minimum of one diagnosis should be set");
+//            throw new CMSException(StatusCode.E1010, "Minimum of one diagnosis should be set");
+//        }
+//        if (diagnosisService.checkDiagnosisIdsValidity(diagnosisIds)) {
+//            currentVisit.getMedicalReference().setDiagnosisIds(diagnosisIds);
+//        }
         if (!consultation.areParametersValid() || consultation.getId() == null) {
             logger.error("Consultation parameters are not valid [" + consultation + "]");
             throw new CMSException(StatusCode.E1010, "Consultation details are not valid");
